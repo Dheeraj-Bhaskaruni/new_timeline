@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Containers Layout</title>
+  <style>
+    .container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .box, .bottom-box {
+      border: 1px solid black;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .box {
+      width: 30%;
+      height: 150px;
+    }
+
+    .bottom-box {
+      width: 49%;
+      height: 150px;
+    }
+
+    .bottom-box:not(:last-child) {
+      margin-right: 2%;
+    }
+
+    h2 {
+      margin: 0;
+      padding-bottom: 10px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .box, .bottom-box {
+        width: 90%;
+        margin-bottom: 10px;
+      }
+
+      .bottom-box:not(:last-child) {
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="box" id="box1">Loading...</div>
+  <div class="box" id="box2">Loading...</div>
+  <div class="box" id="box3">Loading...</div>
+</div>
+
+<div class="container">
+  <div class="bottom-box" id="box4">Loading...</div>
+  <div class="bottom-box" id="box5">Loading...</div>
+</div>
+
+<script>
+  // Load content into a specific box
+  function loadContent(boxId, fileName) {
+    fetch(fileName)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById(boxId).innerHTML = html;
+      })
+      .catch(error => {
+        document.getElementById(boxId).innerHTML = 'Failed to load content.';
+        console.error('There was a problem with the fetch operation:', error.message);
+      });
+  }
+
+  // Load content for each box
+  loadContent('box1', 'HTMLS/CO_original.html');
+  loadContent('box2', 'box2.html');
+  loadContent('box3', 'box3.html');
+  loadContent('box4', 'box4.html');
+  loadContent('box5', 'box5.html');
+</script>
+</body>
+</html>
